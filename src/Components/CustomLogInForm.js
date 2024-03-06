@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useCookies } from 'react-cookie';
+import settings  from '../Config';
 
 
 function CustomLogInForm() {
@@ -31,7 +32,7 @@ function CustomLogInForm() {
 			username: email,
 			password: password
 		}
-		axios.post(`https://dummyjson.com/auth/login`, saveData).then((response) => {
+		axios.post(`${settings.tokenUrl}/auth/login`, saveData).then((response) => {
 			console.log("response of post api", response.data);
 			setLoginToken(response.data.token);
 			setCookie('Token', response.data.token, { path: '/', maxAge: 500 });
@@ -52,7 +53,7 @@ function CustomLogInForm() {
 			headers: { Authorization: `Bearer ${token}` }
 		};
 
-		axios.get(`https://dummyjson.com/auth/me`, config).then((response) => {
+		axios.get(`${settings.tokenUrl}/auth/me`, config).then((response) => {
 			console.log("response of get api", response)
 		})
 	}
